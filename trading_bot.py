@@ -77,5 +77,22 @@ class MLTrader(Strategy):
                 )
                 self.submit_order(order)
                 self.last_trade = "sell"
+# Set the backtesting period
+start_date = datetime(2020, 1, 1)
+end_date = datetime(2023, 12, 31)
+
+# Create the broker instance
+broker = Alpaca(ALPACA_CREDS)
+
+# Create the strategy instance
+strategy = MLTrader(name='mlstrat', broker=broker, parameters={"symbol": "SPY", "cash_at_risk": .5})
+
+# Backtest the strategy
+strategy.backtest(
+    YahooDataBacktesting,
+    start_date,
+    end_date,
+    parameters={"symbol": "SPY", "cash_at_risk": .5}
+)
 
 
